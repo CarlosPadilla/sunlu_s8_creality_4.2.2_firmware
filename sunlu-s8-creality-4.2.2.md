@@ -56,8 +56,18 @@ cpp
 \#define INVERT\_E0\_DIR true
 
 // Screen Activation (Original 12864 Display)
-
-\#define REPRAP\_DISCOUNT\_FULL\_GRAPHIC\_SMART\_CONTROLLER
+//
+// The Creality V4/V422 pins file only defines LCD_PINS_* when
+// CR10_STOCKDISPLAY is selected. The Sunlu S8 panel is a standard
+// 12864 ST7920 display, so use the board's native mapping instead of
+// REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER.
+//
+// Do NOT add LCD_PINS_D4 / LCD_PINS_EN / LCD_PINS_RS to Configuration.h:
+// those pins come from Marlin/src/pins/stm32f1/pins_CREALITY_V4.h.
+\#define CR10\_STOCKDISPLAY
+\#if ENABLED(CR10\_STOCKDISPLAY)
+  \#define RET6\_12864\_LCD  // 512K STM32F103RE board (use VET6_12864_LCD for 256K)
+\#endif
 
 // BLTouch & Bed Leveling Config
 

@@ -13,11 +13,11 @@ You can find both stable and nightly (`bugfix-2.1.x`) downloads on the repositor
 ### sunluS8Base
 
 Base configuration for Sunlu S8 with:
-- RepRapDiscount Full Graphic Smart Controller (12864 display)
+- Creality 12864 (ST7920) display mapping (`CR10_STOCKDISPLAY` + `RET6_12864_LCD`), which is the only LCD pin set defined by the Creality 4.2.2 pins file
 - Filament runout sensor enabled with pull-up resistor
 - 3Dman extruder with 3:1 gear reduction (395 e-steps)
 - Bed dimensions: 310x310x400
-- HR4988 stepper drivers (A4988 in Marlin)
+- HR4988 stepper drivers (configured as `A4988` in Marlin)
 - Specific stepper inversions (X, Y, E0 inverted; Z not inverted)
 - Bed leveling helper menu
 - OctoPrint support

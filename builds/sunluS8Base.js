@@ -23,7 +23,8 @@ module.exports = {
             // Motherboard
             ["MOTHERBOARD", q`BOARD_CREALITY_V422`],
 
-            // Driver types (HR4988 "C" chip)
+            // Driver types: the "C" chip on the SD-card label is an HR4988.
+            // Marlin has no HR4988 driver type; HR4988 is driven exactly like A4988.
             ["X_DRIVER_TYPE", q`A4988`],
             ["Y_DRIVER_TYPE", q`A4988`],
             ["Z_DRIVER_TYPE", q`A4988`],
@@ -40,13 +41,13 @@ module.exports = {
             ["INVERT_Z_DIR", false],
             ["INVERT_E0_DIR", true],
 
-            // Screen Activation (Original 12864 Display)
-            "REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER",
-
-            // Pin definitions for Sunlu S8 display on Creality 4.2.2 board
-            ["LCD_PINS_D4", q`PB15`],
-            ["LCD_PINS_EN", q`PB13`],
-            ["LCD_PINS_RS", q`PB12`],
+            // Screen: use the Creality 12864 (ST7920) pin mapping from the board's
+            // pins file. The Sunlu S8 display is electrically the same panel, so
+            // CR10_STOCKDISPLAY + RET6_12864_LCD gives the correct PB12/PB13/PB15 wiring.
+            // Do NOT enable REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER: the
+            // Creality V4/V422 pins file only defines LCD_PINS_* for CR10_STOCKDISPLAY.
+            "CR10_STOCKDISPLAY",
+            "RET6_12864_LCD",
 
             // Nozzle park for filament change
             "NOZZLE_PARK_FEATURE",
@@ -59,17 +60,14 @@ module.exports = {
             ["FIL_RUNOUT_ENABLED_DEFAULT", true],
             ["NUM_RUNOUT_SENSORS", 1],
             ["FILAMENT_RUNOUT_SCRIPT", "M600"],
-            ["FIL_RUNOUT_STATE", "LOW"],
+            ["FIL_RUNOUT_STATE", q`LOW`],
             "FIL_RUNOUT_PULLUP",
 
             // Bed leveling helper menu
             "LCD_BED_TRAMMING",
             "BED_TRAMMING_INCLUDE_CENTER"
         ],
-        disable: [
-            // Disable default Creality LCD to use RepRap display instead
-            "CR10_STOCKDISPLAY"
-        ]
+        disable: []
     },
     configuration_adv: {
         enable: [
