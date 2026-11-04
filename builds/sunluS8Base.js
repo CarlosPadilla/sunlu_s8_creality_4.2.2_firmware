@@ -36,8 +36,8 @@ module.exports = {
             ["Z_MAX_POS", 400],
 
             // Stepper Inversion
-            ["INVERT_X_DIR", false],
-            ["INVERT_Y_DIR", false],
+            ["INVERT_X_DIR", true],
+            ["INVERT_Y_DIR", true],
             ["INVERT_Z_DIR", false],
             ["INVERT_E0_DIR", true],
 

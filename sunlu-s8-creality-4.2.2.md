@@ -50,9 +50,9 @@ cpp
 
 // Stepper Inversion (Invert if axes move backward during testing)
 
-\#define INVERT\_X\_DIR false
+\#define INVERT\_X\_DIR true
 
-\#define INVERT\_Y\_DIR false
+\#define INVERT\_Y\_DIR true
 
 \#define INVERT\_Z\_DIR false
 
