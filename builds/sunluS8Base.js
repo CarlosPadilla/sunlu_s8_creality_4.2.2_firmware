@@ -43,6 +43,11 @@ module.exports = {
             // Screen Activation (Original 12864 Display)
             "REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER",
 
+            // Pin definitions for Sunlu S8 display on Creality 4.2.2 board
+            ["LCD_PINS_D4", q`PB15`],
+            ["LCD_PINS_EN", q`PB13`],
+            ["LCD_PINS_RS", q`PB12`],
+
             // Nozzle park for filament change
             "NOZZLE_PARK_FEATURE",
 
