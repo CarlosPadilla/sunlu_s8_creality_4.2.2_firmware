@@ -57,9 +57,6 @@ module.exports = {
             // Bed leveling helper menu
             "LCD_BED_TRAMMING",
             "BED_TRAMMING_INCLUDE_CENTER"
-        ],
-        disable: [
-            "GRID_MAX_POINTS_X"
         ]
     },
     configuration_adv: {
