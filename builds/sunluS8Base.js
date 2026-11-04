@@ -1,0 +1,69 @@
+module.exports = {
+    board_env: "STM32F103RE_creality",
+    min_version: "2.1.2",
+    meta: {
+        stable_name: "sunlu_s8_4.2.2-{{marlin_version}}-base-{{uid}}",
+        nightly_name: "sunlu_s8_4.2.2-{{current_date}}-base-{{uid}}"
+    },
+    based_on: {
+        repo: "https://github.com/MarlinFirmware/Configurations/",
+        path: "/config/examples/Creality/Ender-3/CrealityV422/",
+        stable_branch: "release-{{marlin_version}}",
+        nightly_branch: "bugfix-2.1.x"
+    },
+    configuration: {
+        enable: [
+            // Sunlu S8 identification
+            ["STRING_CONFIG_H_AUTHOR", "(Sunlu S8, Creality 4.2.2)"],
+            ["CUSTOM_MACHINE_NAME", "Sunlu S8"],
+
+            // Serial ports
+            ["SERIAL_PORT", 0],
+            ["SERIAL_PORT_2", -1],
+
+            // Motherboard
+            ["MOTHERBOARD", q`BOARD_CREALITY_V422`],
+
+            // Driver types (HR4988 "C" chip)
+            ["X_DRIVER_TYPE", "A4988"],
+            ["Y_DRIVER_TYPE", "A4988"],
+            ["Z_DRIVER_TYPE", "A4988"],
+            ["E0_DRIVER_TYPE", "A4988"],
+
+            // Sunlu S8 Physical Dimensions
+            ["X_BED_SIZE", 310],
+            ["Y_BED_SIZE", 310],
+            ["Z_MAX_POS", 400],
+
+            // Stepper Inversion
+            ["INVERT_X_DIR", true],
+            ["INVERT_Y_DIR", true],
+            ["INVERT_Z_DIR", false],
+            ["INVERT_E0_DIR", true],
+
+            // Screen Activation (Original 12864 Display)
+            "REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER",
+
+            // 3Dman Extruder E-Steps (3:1 Gear Reduction)
+            ["DEFAULT_AXIS_STEPS_PER_UNIT", [80, 80, 400, 395]],
+
+            // Filament Runout Sensor
+            "FILAMENT_RUNOUT_SENSOR",
+            ["FILAMENT_RUNOUT_SCRIPT", "M600"],
+            ["FIL_RUNOUT_STATE", "LOW"],
+
+            // Bed leveling helper menu
+            "LCD_BED_TRAMMING",
+            "BED_TRAMMING_INCLUDE_CENTER"
+        ]
+    },
+    configuration_adv: {
+        enable: [
+            // Octoprint support
+            "HOST_ACTION_COMMANDS",
+
+            // Filament Runout Sensor Pull-up
+            "FIL_RUNOUT_PULLUP"
+        ]
+    }
+};

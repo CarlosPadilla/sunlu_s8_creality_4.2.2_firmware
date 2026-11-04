@@ -1,59 +1,58 @@
-# Ender-3 4.2.2 firmware
+# Sunlu S8 4.2.2 firmware
 
-Automatic [Marlin](https://github.com/MarlinFirmware/Marlin) builds for the Ender-3 with the stock creality 4.2.2(512K) board.  
-You can find both stable and nightly (`bugfix-2.1.x`) downloads on the repository releases.  
+Automatic [Marlin](https://github.com/MarlinFirmware/Marlin) builds for the Sunlu S8 printer retrofitted with a Creality 4.2.2(512K) board.
+You can find both stable and nightly (`bugfix-2.1.x`) downloads on the repository releases.
 
 **Important**
 * Make sure you have a 4.2.2 512K flash board before installing. Some newer models come with 256K of flash. You can read more [here](https://github.com/MarlinFirmware/Marlin/issues/23596). If your board is the 256K variant you can fork the repo and change the `board_env`.
-* All builds here use the default `A4988` stepper drivers, you can fork and change that if you have different ones. To find out which drivers you have there is a little marking on the sd card slot. More info [here](https://github.com/MarlinFirmware/Configurations/pull/633#issuecomment-995206382).
-* It's been a while since i used this board. The latest tested version is `2.0.9.3`.
+* This configuration uses HR4988 stepper drivers (A4988 in Marlin).
+* Original Sunlu S8 display requires custom wiring to the Creality 4.2.2 board. See the [wiring documentation](sunlu-s8-creality-4.2.2.md) for details.
 
 ## Builds
 
-### default
+### sunluS8Base
 
-The default Marlin configuration for Ender-3.
+Base configuration for Sunlu S8 with:
+- RepRapDiscount Full Graphic Smart Controller (12864 display)
+- Filament runout sensor enabled with pull-up resistor
+- 3Dman extruder with 3:1 gear reduction (395 e-steps)
+- Bed dimensions: 310x310x400
+- HR4988 stepper drivers (A4988 in Marlin)
+- Specific stepper inversions (X, Y, E0 inverted; Z not inverted)
+- Bed leveling helper menu
+- OctoPrint support
 
-### base
+### sunluS8AutoLevel5x5 / sunluS8AutoLevel7x7
 
-Bed leveling helper menu to move around the corners. Better than having a gcode file or moving manually.  
-Also enables `HOST_ACTION_COMMANDS` as required by octoprint.
+Base + automatic BLTouch leveling with 5x5 or 7x7 grid.
+- BLTouch on PB1 pin (dedicated BLTouch port)
+- Nozzle-to-probe offset: -44, -7, 0
+- 15mm probing margin
+- Symmetrical grid with 45mm margin on left/right and 15mm on front/back
+- Z-offset wizard enabled
+- Z-safe homing enabled
+- M48 accuracy test enabled
 
-### base_lin
+**Important**: These builds assume you are using the dedicated BLTouch port on the board and have the Z-stop disconnected. It will not work if you are using the Z-stop port for the probe.
 
-base + [linear advance](https://marlinfw.org/docs/features/lin_advance.html).     
-Linear advance `K factor` is set to `0`. You can read the marlin docs on how to find and set a good value. There are also numerous videos on youtube.  
+### sunluS8ManualMesh5x5 / sunluS8ManualMesh7x7
 
-### manual_mesh
+Base + manual mesh leveling with 5x5 or 7x7 grid.
+- Manual probe mesh leveling
+- Restore leveling after G28
+- LCD bed leveling menu
+- Mesh edit menu enabled
 
-[Manual mesh leveling](https://marlinfw.org/docs/gcode/G029-mbl.html)  
-4 different variations are provided:
+## Build your own firmware
 
-* `manual_mesh_5x5` [base](#base) + manual mesh leveling with 5x5 grid
-* `manual_mesh_5x5_lin` [base_lin](#base_lin) + manual mesh leveling with 5x5 grid
-* `manual_mesh_7x7` [base](#base) + manual mesh leveling with 7x7 grid
-* `manual_mesh_7x7_lin` [base_lin](#base_lin) + manual mesh leveling with 7x7 grid
+Check out [Marlin auto build](https://github.com/zisismaras/marlin_auto_build) if you want to build your own firmware automatically on GitHub.
 
-### auto_level
+## Hardware Configuration
 
-[automatic leveling](https://marlinfw.org/docs/gcode/G029-abl-bilinear.html)  
-**Note**: Only tested with a CR-touch but a BL-touch should work as well. Not sure about the 3D-touch clones, do some research before flashing. If you have a different type of probe you will need a different configuration.  
+For detailed wiring diagrams and hardware setup instructions, see [sunlu-s8-creality-4.2.2.md](sunlu-s8-creality-4.2.2.md).
 
-4 different variations are provided:
-
-* `auto_level_5x5` [base](#base) + automatic leveling with 5x5 grid
-* `auto_level_5x5_lin` [base_lin](#base_lin) + automatic leveling with 5x5 grid
-* `auto_level_7x7` [base](#base) + automatic leveling with 7x7 grid
-* `auto_level_7x7_lin` [base_lin](#base_lin) + automatic leveling with 7x7 grid
-
-The grid is configured to be symmetrical with 45mm margin on left and right and 15mm on front and back.  
-All probe offsets are set to `0`. There are a lot of videos on how to measure and set them.  
-The build enables the offset wizard to simplify the Z-offset measurement.  
-
-**Important**: The build assumes you are using the dedicated BL-touch port on the board and you have the Z-stop disconnected. It will not work if you are using the Z-stop port for the probe.  
-
-The [M48 accuracy test](https://marlinfw.org/docs/gcode/M048.html) is also enabled in case you want to test your probe.
-
-## Build you own firmware
-
-Check out [Marlin auto build](https://github.com/zisismaras/marlin_auto_build) if you want to build your own firmware automatically on github.
+**Key hardware requirements:**
+- Display: Custom cross-over wiring required (14-pin to 10-pin EXP1)
+- Dual Z-Motors: Parallel Y-splitter cable to single Z-motor port
+- BLTouch: 5-pin cable to dedicated BLTouch port, disconnect mechanical Z-endstop
+- Filament sensor: 2-wire connection to FIL-DET port (Signal and Ground)
