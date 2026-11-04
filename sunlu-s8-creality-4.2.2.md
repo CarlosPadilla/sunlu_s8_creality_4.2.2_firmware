@@ -50,9 +50,9 @@ cpp
 
 // Stepper Inversion (Invert if axes move backward during testing)
 
-\#define INVERT\_X\_DIR true
+\#define INVERT\_X\_DIR false
 
-\#define INVERT\_Y\_DIR true
+\#define INVERT\_Y\_DIR false
 
 \#define INVERT\_Z\_DIR false
 
@@ -157,6 +157,17 @@ Corrected E-Steps = (Requested Distance / Actual Distance) × Current E-Steps
    * **If it stops:** Success. Proceed to calibrate your final Z-offset via the screen menu.  
    * **If it keeps moving down:** Shut off power immediately. Your probe signals are not reaching the board correctly.
 
+### “EEPROM size” error after flashing
+
+Marlin stores its settings in the board’s 24C16 EEPROM. When you flash a build with a different feature set (for example base → BLTouch auto-level), the size of Marlin’s internal settings structure changes. The old EEPROM data no longer matches the new firmware, so Marlin reports an EEPROM size/version error at boot. This is normal after changing configurations, not a hardware failure.
+
+Clear it once with either method:
+
+- **Serial:** send `M502` (load factory defaults), then `M500` (save them), then power-cycle the printer.
+- **LCD:** `Configuration` → `Advanced Settings` → `Initialize EEPROM`, then power-cycle.
+
+This erases the previous Z-offset, bed mesh, PID values, and other stored settings, so recalibrate them afterwards. After the first `M500` the error should not return on subsequent boots.
+
 Would you like the exact **PlatformIO environment string** for your platformio.ini file to ensure it compiles without errors for this specific 4.2.2 motherboard?
 
 ## BLtouch wiring
@@ -223,11 +234,13 @@ The Creality board has a 10-pin connector (5 pins × 2 rows). The assignment bel
 - EXP1_3: PB10 (Encoder A)
 - EXP1_4: PB11 (Not used by this build)
 - EXP1_5: PB14 (Encoder B)
-- EXP1_6: PB13 (SPI clock / SCLK / LCD EN)
+- EXP1_6: PB13 (LCD data / LCD D4 in Marlin's `CR10_STOCKDISPLAY` mapping)
 - EXP1_7: PB12 (LCD chip select / RS / CS)
-- EXP1_8: PB15 (SPI data / SID / MOSI / LCD D4)
+- EXP1_8: PB15 (LCD clock / LCD EN in Marlin's `CR10_STOCKDISPLAY` mapping)
 - EXP1_9: GND
 - EXP1_10: +5V
+
+> **Important:** Marlin's `CR10_STOCKDISPLAY` mapping uses **PB15 as LCD_EN (clock)** and **PB13 as LCD_D4 (data)**. This is the reverse of the STM32's hardware SPI alternate-function labels shown in some pinout diagrams. If these two wires are crossed, the display backlight will light up but the screen will stay blank.
 
 > **Pin 1 orientation:** Pin 1 is the end marked with a small triangle or `1` on the board. If your board marks the opposite end, identify the wires by the MCU pin names above, not by the printed pin number. Reversing +5V and GND can destroy the display or the board.
 
@@ -268,9 +281,9 @@ To make the display, the clickable encoder knob, and the speaker work perfectly,
 | EXP1_9 | GND | Pin 12 (GND) | Ground Connection |
 | EXP1_1 | Beeper (PC6) | Pin 13 (BEEPER) | Speaker/Buzzer |
 | EXP1_2 | Click Button (PB2) | Pin 6 (BTN ENC) | Push-switch click pin |
-| EXP1_8 | SID / MOSI (PB15) | Pin 8 (LCD D4) | SPI Data Line |
+| EXP1_8 | LCD_EN / Clock (PB15) | Pin 4 (LCD EN) | SPI Clock Line |
 | EXP1_7 | LCD_CS / RS (PB12) | Pin 2 (LCD RS) | SPI Chip Select |
-| EXP1_6 | SCLK / SCK (PB13) | Pin 4 (LCD EN) | SPI Clock Line |
+| EXP1_6 | LCD_D4 / Data (PB13) | Pin 8 (LCD D4) | SPI Data Line |
 | EXP1_3 | Encoder A (PB10) | Pin 7 (BTN EN1) | Dial rotation directional signal |
 | EXP1_5 | Encoder B (PB14) | Pin 5 (BTN EN2) | Dial rotation directional signal |
 | EXP1_4 | Unused (PB11) | — (leave Pin 3 RESET disconnected) | Not used by this build |
@@ -281,6 +294,15 @@ To make the display, the clickable encoder knob, and the speaker work perfectly,
 - Pin 10 (NC)
 - Pin 11 (NC)
 - Pin 14 (NC)
+
+### Screen is lit but blank
+
+If the backlight is on but no text appears, check these in order:
+
+1. **Swap the data and clock wires.** With the current `CR10_STOCKDISPLAY` firmware, `PB15` (board EXP1 pin 8) must go to display **pin 4 (LCD EN / clock)**, and `PB13` (board EXP1 pin 6) must go to display **pin 8 (LCD D4 / data)**. Many pinout diagrams label PB13 as SCLK and PB15 as MOSI, which is the STM32 hardware-SPI alternate function, not Marlin's `CR10_STOCKDISPLAY` mapping. If these two wires are crossed, the backlight will light but the screen stays blank.
+2. **Adjust the contrast trimpot** on the back of the display PCB (usually marked `R3` or `POT`). Turn it slowly until the text appears. If the screen goes fully dark instead, you have passed the correct setting.
+3. **Re-check 5 V and GND** at display pins 1 and 12. The display can light its backlight with only the backlight supply present and still be unable to initialize.
+4. **Check the RESET line.** Display pin 3 is normally left disconnected because most ST7920 panels have an on-board power-on reset circuit. If yours does not, it may need to be tied high (for example to +5 V through a 10 kΩ resistor) before the display will initialize.
 
 
 ---

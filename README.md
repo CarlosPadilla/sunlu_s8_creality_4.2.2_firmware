@@ -18,7 +18,7 @@ Base configuration for Sunlu S8 with:
 - 3Dman extruder with 3:1 gear reduction (395 e-steps)
 - Bed dimensions: 310x310x400
 - HR4988 stepper drivers (configured as `A4988` in Marlin)
-- Specific stepper inversions (X, Y, E0 inverted; Z not inverted)
+- Specific stepper inversions (E0 inverted; X, Y, Z not inverted)
 - Bed leveling helper menu
 - OctoPrint support
 
@@ -52,7 +52,7 @@ Check out [Marlin auto build](https://github.com/CarlosPadilla/marlin_auto_build
 For detailed wiring diagrams and hardware setup instructions, see [sunlu-s8-creality-4.2.2.md](sunlu-s8-creality-4.2.2.md).
 
 **Key hardware requirements:**
-- Display: Custom cross-over wiring required (14-pin to 10-pin EXP1)
+- Display: Custom cross-over wiring required (14-pin to 10-pin EXP1). With `CR10_STOCKDISPLAY`, connect board `PB15` to display LCD EN (pin 4) and board `PB13` to display LCD D4 (pin 8); see the [wiring documentation](sunlu-s8-creality-4.2.2.md#manual-cross-over-wiring-map).
 - Dual Z-Motors: Parallel Y-splitter cable to single Z-motor port
 - BLTouch: 5-pin cable to dedicated BLTouch port, disconnect mechanical Z-endstop
 - Filament sensor: 2-wire connection to FIL-DET port (Signal and Ground)
