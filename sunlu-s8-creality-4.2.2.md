@@ -28,6 +28,9 @@ cpp
 \#define MOTHERBOARD         BOARD\_CREALITY\_V422
 
 // Drivers (The "C" on your SD slot means HR4988 drivers)
+//
+// Marlin has no HR4988 driver type. HR4988 is driven exactly like A4988,
+// so use A4988 here. Writing HR4988 will fail Marlin's sanity check.
 
 \#define X\_DRIVER\_TYPE  A4988
 
@@ -204,7 +207,7 @@ The Sunlu S8 display has a [14-pin connector](https://raw.githubusercontent.com/
 
 **Creality 4.2.2 10-Pin EXP1 Connector:**
 
-The Creality board has a [10-pin connector ](https://raw.githubusercontent.com/dml-tech/marlin-sunlu_s8/master/EXP1%20pinout.txt) (5 pins × 2 rows). Looking at the connector with the **key notch facing UP**, the pins are arranged as follows:
+The Creality board has a 10-pin connector (5 pins × 2 rows). The assignment below matches Marlin's [`pins_CREALITY_V4.h`](https://github.com/MarlinFirmware/Marlin/blob/bugfix-2.1.x/Marlin/src/pins/stm32f1/pins_CREALITY_V4.h) when `RET6_12864_LCD` is selected. Looking at the connector with the **key notch facing UP**, the pins are arranged as follows:
 
 ```
               Plastic Notch
@@ -215,32 +218,34 @@ The Creality board has a [10-pin connector ](https://raw.githubusercontent.com/d
       +---------------------------+
 
 ```
-- EXP1_1: 5V
-- EXP1_2: GND
-- EXP1_3: PB15 (MOSI / SID (Data))
-- EXP1_4: PB12 (RS / CS (Chip Select))
-- EXP1_5: PB13 (SCLK (Serial Clock))
-- EXP1_6: PB14 (EXP_CS / SPI MISO)
-- EXP1_7: PB11 (LCD RX / Encoder B)
-- EXP1_8: PB10 (LCD TX / Encoder A)
-- EXP1_9: PB2 (Encoder Button)
-- EXP1_10: PC6 (LCD Beeper)
+- EXP1_1: PC6 (Beeper)
+- EXP1_2: PB2 (Encoder button)
+- EXP1_3: PB10 (Encoder A)
+- EXP1_4: PB11 (Not used by this build)
+- EXP1_5: PB14 (Encoder B)
+- EXP1_6: PB13 (SPI clock / SCLK / LCD EN)
+- EXP1_7: PB12 (LCD chip select / RS / CS)
+- EXP1_8: PB15 (SPI data / SID / MOSI / LCD D4)
+- EXP1_9: GND
+- EXP1_10: +5V
+
+> **Pin 1 orientation:** Pin 1 is the end marked with a small triangle or `1` on the board. If your board marks the opposite end, identify the wires by the MCU pin names above, not by the printed pin number. Reversing +5V and GND can destroy the display or the board.
 
 [![Creality 4.2.2 10-Pin EXP1 Connector](images/creality-4.2.2-10-pin-exp1-connector.png)](https://user-images.githubusercontent.com/8165290/118611412-3ed59080-b7d6-11eb-8a78-9a87a98087e9.png)
 
 
 | Pin Number | MCU Pin Name | Main Function / Notes |
 |------------|--------------|-----------------------|
-| 1 | GND | Ground Connection |
-| 2 | 5V | +5V Power Supply |
-| 3 | PB15 | MOSI / SID (Data) |
-| 4 | PB12 | RS / CS (Chip Select) |
-| 5 | PB13 | SCLK (Serial Clock) |
-| 6 | PB14 | EXP_CS / SPI MISO |
-| 7 | PB11 | LCD RX / Encoder B |
-| 8 | PB10 | LCD TX / Encoder A |
-| 9 | PB2 | Encoder Button |
-| 10 | PC6 | LCD Beeper |
+| 1 | PC6 | Beeper |
+| 2 | PB2 | Encoder button (click) |
+| 3 | PB10 | Encoder A |
+| 4 | PB11 | Not used by this build (UART3 RX) |
+| 5 | PB14 | Encoder B |
+| 6 | PB13 | SPI clock (SCLK / LCD EN) |
+| 7 | PB12 | LCD chip select (RS / CS) |
+| 8 | PB15 | SPI data (SID / MOSI / LCD D4) |
+| 9 | GND | Ground Connection |
+| 10 | 5V | +5V Power Supply |
 
 
 Step-by-Step Custom Wiring Guide
@@ -259,18 +264,19 @@ To make the display, the clickable encoder knob, and the speaker work perfectly,
 
 | Creality 4.2.2 Mainboard Pin | Function | Map to Sunlu Display (14-pin) EXP1 Pin | Notes / Hardware Hookup |
 | --- | --- | --- | --- |
-| EXP1_1 | +5V Power | Pin 1 (VCC) | Logic Supply Power |
-| EXP1_2 | GND | Pin 12 (GND) | Ground Connection |
-| EXP1_10 | Beeper | Pin 13 (BEEPER) | Speaker/Buzzer |
-| EXP1_9 | Click Button | Pin 6 (BTN ENC) | Push-switch click pin |
-| EXP1_3 | SID / MOSI | Pin 8 (LCD D4) | SPI Data Line |
-| EXP1_4 | LCD_CS / RS | Pin 2 (LCD RS) | SPI Chip Select |
-| EXP1_5 | SCLK / SCK | Pin 4 (LCD EN) | SPI Clock Line |
-| EXP1_8 | Encoder A | Pin 7 (BTN EN1) | Dial rotation directional signal |
-| EXP1_7 | Encoder B | Pin 5 (BTN EN2) | Dial rotation directional signal |
-| EXP1_6 | Unused | Pin 3 (RESET) | Can be left disconnected |
+| EXP1_10 | +5V Power | Pin 1 (VCC) | Logic Supply Power |
+| EXP1_9 | GND | Pin 12 (GND) | Ground Connection |
+| EXP1_1 | Beeper (PC6) | Pin 13 (BEEPER) | Speaker/Buzzer |
+| EXP1_2 | Click Button (PB2) | Pin 6 (BTN ENC) | Push-switch click pin |
+| EXP1_8 | SID / MOSI (PB15) | Pin 8 (LCD D4) | SPI Data Line |
+| EXP1_7 | LCD_CS / RS (PB12) | Pin 2 (LCD RS) | SPI Chip Select |
+| EXP1_6 | SCLK / SCK (PB13) | Pin 4 (LCD EN) | SPI Clock Line |
+| EXP1_3 | Encoder A (PB10) | Pin 7 (BTN EN1) | Dial rotation directional signal |
+| EXP1_5 | Encoder B (PB14) | Pin 5 (BTN EN2) | Dial rotation directional signal |
+| EXP1_4 | Unused (PB11) | — (leave Pin 3 RESET disconnected) | Not used by this build |
 
 **Note:** The following Sunlu display pins are **not connected** and should be left unconnected:
+- Pin 3 (RESET) — the ST7920 resets on power-up; this build has no LCD reset pin on EXP1
 - Pin 9 (NC)
 - Pin 10 (NC)
 - Pin 11 (NC)
@@ -348,7 +354,7 @@ Compile your code, flash it to your Creality 4.2.2 board, and test the functiona
 
 ⚠️ Critical Physical Safety Checks
 
-1. **Double-Check \+5V and GND:** Double-verify **Sunlu Display Pin 1 (VCC)** connects to **Creality EXP1 Pin 2 (+5V)** and **Sunlu Display Pin 12 (GND)** connects to **Creality EXP1 Pin 1 (GND)** before turning the printer on. Mixing power and ground will instantly short out the screen or the board regulator. \[[1](https://gist.github.com/neoyagami/5f431928997dbf255e84e4c937983e8e)\]
+1. **Double-Check \+5V and GND:** Double-verify **Sunlu Display Pin 1 (VCC)** connects to **Creality EXP1 Pin 10 (+5V)** and **Sunlu Display Pin 12 (GND)** connects to **Creality EXP1 Pin 9 (GND)** before turning the printer on. Mixing power and ground will instantly short out the screen or the board regulator. \[[1](https://gist.github.com/neoyagami/5f431928997dbf255e84e4c937983e8e)\]
 2. **Contrast Adjustment:** If you power on the printer and the screen lights up brightly but shows no text, it is likely receiving the signal but has bad contrast. Grab a small flathead screwdriver and gently adjust the **Contrast Trimpot** (usually labeled R3 or POT on the back of the Sunlu PCB) until the text pops into view. \[[1](https://docs.duet3d.com/User_manual/Connecting_hardware/Display_12864), [2](https://reprap.org/wiki/RepRapDiscount_Smart_Controller)\]
 
 Are you **crimping custom DuPont heads** onto the wires, or are you splicing two existing ribbon cables together? If splicing, I can help you decode the cable stripe colors\!
