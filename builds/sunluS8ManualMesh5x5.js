@@ -12,8 +12,7 @@ module.exports = {
             "RESTORE_LEVELING_AFTER_G28",
             "LCD_BED_LEVELING",
             "MESH_EDIT_MENU",
-            ["GRID_MAX_POINTS_X", 5],
-            ["GRID_MAX_POINTS_Y", q`GRID_MAX_POINTS_X`]
+            ["GRID_MAX_POINTS_X", 5]
         ]
     }
 };

@@ -25,10 +25,10 @@ module.exports = {
             ["MOTHERBOARD", q`BOARD_CREALITY_V422`],
 
             // Driver types (HR4988 "C" chip)
-            ["X_DRIVER_TYPE", "A4988"],
-            ["Y_DRIVER_TYPE", "A4988"],
-            ["Z_DRIVER_TYPE", "A4988"],
-            ["E0_DRIVER_TYPE", "A4988"],
+            ["X_DRIVER_TYPE", q`A4988`],
+            ["Y_DRIVER_TYPE", q`A4988`],
+            ["Z_DRIVER_TYPE", q`A4988`],
+            ["E0_DRIVER_TYPE", q`A4988`],
 
             // Sunlu S8 Physical Dimensions
             ["X_BED_SIZE", 310],
