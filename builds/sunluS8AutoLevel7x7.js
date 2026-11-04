@@ -17,6 +17,7 @@ module.exports = {
             ["NOZZLE_TO_PROBE_OFFSET", [-44, -7, 0]],
             ["PROBING_MARGIN", 15],
             ["GRID_MAX_POINTS_X", 7],
+            ["GRID_MAX_POINTS_Y", q`GRID_MAX_POINTS_X`],
             "Z_MIN_PROBE_REPEATABILITY_TEST"
         ],
         disable: [

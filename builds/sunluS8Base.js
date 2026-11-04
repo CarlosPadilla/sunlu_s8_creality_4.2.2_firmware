@@ -49,8 +49,11 @@ module.exports = {
 
             // Filament Runout Sensor
             "FILAMENT_RUNOUT_SENSOR",
+            ["FIL_RUNOUT_ENABLED_DEFAULT", true],
+            ["NUM_RUNOUT_SENSORS", 1],
             ["FILAMENT_RUNOUT_SCRIPT", "M600"],
             ["FIL_RUNOUT_STATE", "LOW"],
+            "FIL_RUNOUT_PULLUP",
 
             // Bed leveling helper menu
             "LCD_BED_TRAMMING",
@@ -60,10 +63,7 @@ module.exports = {
     configuration_adv: {
         enable: [
             // Octoprint support
-            "HOST_ACTION_COMMANDS",
-
-            // Filament Runout Sensor Pull-up
-            "FIL_RUNOUT_PULLUP"
+            "HOST_ACTION_COMMANDS"
         ]
     }
 };
