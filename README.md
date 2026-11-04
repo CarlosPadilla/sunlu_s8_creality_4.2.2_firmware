@@ -45,7 +45,7 @@ Base + manual mesh leveling with 5x5 or 7x7 grid.
 
 ## Build your own firmware
 
-Check out [Marlin auto build](https://github.com/zisismaras/marlin_auto_build) if you want to build your own firmware automatically on GitHub.
+Check out [Marlin auto build](https://github.com/CarlosPadilla/marlin_auto_build) if you want to build your own firmware automatically on GitHub.
 
 ## Hardware Configuration
 
