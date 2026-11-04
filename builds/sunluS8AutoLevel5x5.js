@@ -20,7 +20,8 @@ module.exports = {
             "Z_MIN_PROBE_REPEATABILITY_TEST"
         ],
         disable: [
-            "Z_MIN_PROBE_USES_Z_MIN_ENDSTOP_PIN"
+            "Z_MIN_PROBE_USES_Z_MIN_ENDSTOP_PIN",
+            "GRID_MAX_POINTS_X"
         ]
     },
     configuration_adv: {

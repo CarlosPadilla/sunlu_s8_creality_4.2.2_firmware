@@ -18,8 +18,7 @@ module.exports = {
             ["CUSTOM_MACHINE_NAME", "Sunlu S8"],
 
             // Serial ports
-            ["SERIAL_PORT", 0],
-            ["SERIAL_PORT_2", -1],
+            ["SERIAL_PORT", 1],
 
             // Motherboard
             ["MOTHERBOARD", q`BOARD_CREALITY_V422`],
@@ -58,12 +57,18 @@ module.exports = {
             // Bed leveling helper menu
             "LCD_BED_TRAMMING",
             "BED_TRAMMING_INCLUDE_CENTER"
+        ],
+        disable: [
+            "GRID_MAX_POINTS_X"
         ]
     },
     configuration_adv: {
         enable: [
             // Octoprint support
-            "HOST_ACTION_COMMANDS"
+            "HOST_ACTION_COMMANDS",
+
+            // Advanced pause for M600 filament change
+            "ADVANCED_PAUSE_FEATURE"
         ]
     }
 };
