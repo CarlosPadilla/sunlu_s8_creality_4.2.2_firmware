@@ -43,6 +43,9 @@ module.exports = {
             // Screen Activation (Original 12864 Display)
             "REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER",
 
+            // Nozzle park for filament change
+            "NOZZLE_PARK_FEATURE",
+
             // 3Dman Extruder E-Steps (3:1 Gear Reduction)
             ["DEFAULT_AXIS_STEPS_PER_UNIT", [80, 80, 400, 395]],
 
@@ -69,8 +72,7 @@ module.exports = {
             "HOST_ACTION_COMMANDS",
 
             // Advanced pause for M600 filament change
-            "ADVANCED_PAUSE_FEATURE",
-            "NOZZLE_PARK_FEATURE"
+            "ADVANCED_PAUSE_FEATURE"
         ]
     }
 };
