@@ -57,6 +57,10 @@ module.exports = {
             // Bed leveling helper menu
             "LCD_BED_TRAMMING",
             "BED_TRAMMING_INCLUDE_CENTER"
+        ],
+        disable: [
+            // Disable default Creality LCD to use RepRap display instead
+            "CR10_STOCKDISPLAY"
         ]
     },
     configuration_adv: {
@@ -65,7 +69,8 @@ module.exports = {
             "HOST_ACTION_COMMANDS",
 
             // Advanced pause for M600 filament change
-            "ADVANCED_PAUSE_FEATURE"
+            "ADVANCED_PAUSE_FEATURE",
+            "NOZZLE_PARK_FEATURE"
         ]
     }
 };

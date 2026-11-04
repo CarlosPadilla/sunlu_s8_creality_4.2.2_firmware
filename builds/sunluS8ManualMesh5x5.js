@@ -13,6 +13,9 @@ module.exports = {
             "LCD_BED_LEVELING",
             "MESH_EDIT_MENU",
             ["GRID_MAX_POINTS_X", 5]
+        ],
+        disable: [
+            "GRID_MAX_POINTS_X"
         ]
     }
 };
