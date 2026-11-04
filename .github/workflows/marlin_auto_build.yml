@@ -6,6 +6,7 @@ on:
       - 'builds/**'
   schedule:
     - cron:  '30 3 * * *'
+  workflow_dispatch:
 
 jobs:
   create_builds:
