@@ -1,27 +1,27 @@
 {
     "builds/sunluS8AutoLevel5x5.js": {
-        "version": "fe827ce0319e43109e5c3a55a04c15faaabc4b4b",
+        "version": "2d858089937261cbf158530060d50a58db192c5d",
         "md5": "96f1d621198a8b1d47a89412f7c57251",
-        "assetId": 754699238
+        "assetId": 758965159
     },
     "builds/sunluS8AutoLevel7x7.js": {
-        "version": "fe827ce0319e43109e5c3a55a04c15faaabc4b4b",
+        "version": "2d858089937261cbf158530060d50a58db192c5d",
         "md5": "33ef7ff22713e97173ccc427398d15c3",
-        "assetId": 754699264
+        "assetId": 758965189
     },
     "builds/sunluS8Base.js": {
-        "version": "fe827ce0319e43109e5c3a55a04c15faaabc4b4b",
+        "version": "2d858089937261cbf158530060d50a58db192c5d",
         "md5": "191ff52a3ed29b499d79eaea74fcd34a",
-        "assetId": 754699283
+        "assetId": 758965230
     },
     "builds/sunluS8ManualMesh5x5.js": {
-        "version": "fe827ce0319e43109e5c3a55a04c15faaabc4b4b",
+        "version": "2d858089937261cbf158530060d50a58db192c5d",
         "md5": "0941991dadb3ed818f46b9def93c6e20",
-        "assetId": 754699305
+        "assetId": 758965270
     },
     "builds/sunluS8ManualMesh7x7.js": {
-        "version": "fe827ce0319e43109e5c3a55a04c15faaabc4b4b",
+        "version": "2d858089937261cbf158530060d50a58db192c5d",
         "md5": "b4a90d8ce59b24538f3983e95d4827e6",
-        "assetId": 754699324
+        "assetId": 758965294
     }
 }
